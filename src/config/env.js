@@ -29,8 +29,8 @@ export const config = {
   SUPABASE_URL: env.NEXT_PUBLIC_SUPABASE_URL,
   SUPABASE_SECRET: env.SECRET_KEY,
   PORT: env.PORT || 3000,
-  LOG_FILE_PATH: env.LOG_FILE_PATH || './logs',
-  LOG_FILE_NAME: env.LOG_FILE_NAME || 'app.log',
+  LOG_FILE_PATH: env.LOG_FILE_PATH || './logs/app.log',
+  LOG_REGION: env.LOG_REGION || 'UTC',
   LOG_TO_FILE_ENABLED: env.LOG_TO_FILE_ENABLED || 'false',
   LOG_TO_CONSOLE_ENABLED: env.LOG_TO_CONSOLE_ENABLED || 'true',
 }
