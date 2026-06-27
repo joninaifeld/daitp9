@@ -11,7 +11,7 @@ export default class AuthService {
     async login(email, password) {
         const { data, error } = await supabase
             .from(this.table)
-            .select('*')
+            .select('username, full_name, email, pfp, bio, verified, followers, following')
             .eq('email', email)
             .single()
 
@@ -45,7 +45,7 @@ export default class AuthService {
         const { data, error } = await supabase
             .from(this.table)
             .insert({ username, full_name: fullName, email, password: hashed })
-            .select()
+            .select('username, full_name, email, pfp, bio, verified, followers, following')
             .single()
 
         if (error) {
