@@ -1,1 +1,0 @@
-// Intercepta las solicitudes hacia rutas protegidas. Debe leer el header Authorization, extraer el token (formato Bearer <token>), verificar su firma y validez. Si el token es correcto, adjunta los datos del usuario decodificado a la petición (req.user) y permite el paso. Si falta o expiró, corta la petición devolviendo un estado 401 Unauthorized.

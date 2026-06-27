@@ -1,12 +1,14 @@
 import { Router } from 'express'
 import PostController from '../controllers/post-controller.js'
+import { validatePostBody } from '../middlewares/type-middleware.js'
 
 const router = Router()
 
 router.get('/', PostController.getAll)
 router.get('/:id', PostController.getById)
-router.post('/', PostController.create)
-router.put('/:id', PostController.update)
+router.post('/', validatePostBody, PostController.create)
+router.put('/:id', validatePostBody, PostController.update)
+router.patch('/:id', validatePostBody, PostController.update)
 router.delete('/:id', PostController.remove)
 
 export default router
