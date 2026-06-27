@@ -9,56 +9,80 @@ function isInteger(value) {
 }
 
 function isString(value) {
-    return typeof value === "string";
+    return typeof value === 'string'
+}
+
+function isEmail(value) {
+    return typeof value === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
+}
+
+function resolveRequired(field, method) {
+    if (typeof field.isRequired === 'function') {
+        return field.isRequired(method)
+    }
+    return Boolean(field.isRequired)
+}
+
+export function validateBody(fieldDefs = [], entityName = 'body') {
+    return (req, res, next) => {
+        const method = req.method.toUpperCase()
+        const payload = req.body
+
+        if (!payload || typeof payload !== 'object' || Array.isArray(payload)) {
+            const message = `${entityName} must be an object`
+            logHelper.log(new Error(message))
+            return res.status(400).send(message)
+        }
+
+        const receivedFields = Object.keys(payload)
+        const missingFields = fieldDefs.filter(field => resolveRequired(field, method) && !receivedFields.includes(field.key))
+        const extraFields = receivedFields.filter(field => !fieldDefs.some(def => def.key === field))
+
+        if (missingFields.length > 0 || extraFields.length > 0) {
+            const details = []
+            if (missingFields.length > 0) {
+                details.push(`missing fields: ${missingFields.map(field => field.key).join(', ')}`)
+            }
+            if (extraFields.length > 0) {
+                details.push(`unexpected fields: ${extraFields.join(', ')}`)
+            }
+
+            const message = `Invalid ${entityName.toLowerCase()} shape: ${details.join('; ')}`
+            logHelper.log(new Error(message))
+            return res.status(400).send(message)
+        }
+
+        for (const definition of fieldDefs) {
+            if (!Object.prototype.hasOwnProperty.call(payload, definition.key)) continue
+
+            if (!definition.validator(payload[definition.key])) {
+                logHelper.log(new Error(`Validation failed for field ${definition.key}: ${definition.message}`))
+                return res.status(400).send(definition.message)
+            }
+        }
+
+        next()
+    }
 }
 
 export function validatePostBody(req, res, next) {
-    const isFullObj = req.method === 'POST' || req.method === 'PUT'
-    const post = req.body
-
-    if (!post || typeof post !== 'object' || Array.isArray(post)) {
-        logHelper.log(new Error('Post must be an object'))
-        return res.status(400).send('Post must be an object')
-    }
-
     const fieldDefs = [
-        { key: 'date', isRequired: isFullObj, validator: isValidTimestamptz, message: 'date must be a valid timestamptz string' },
+        { key: 'date', isRequired: method => ['POST', 'PUT'].includes(method), validator: isValidTimestamptz, message: 'date must be a valid timestamptz string' },
         { key: 'likes', isRequired: false, validator: isInteger, message: 'likes must be an integer' },
         { key: 'caption', isRequired: false, validator: isString, message: 'caption must be a string' },
-        { key: 'img_url', isRequired: isFullObj, validator: isString, message: 'img_url must be a string' },
-        { key: 'user_id', isRequired: isFullObj, validator: isInteger, message: 'user_id must be an integer' }
+        { key: 'img_url', isRequired: method => ['POST', 'PUT'].includes(method), validator: isString, message: 'img_url must be a string' },
+        { key: 'user_id', isRequired: method => ['POST', 'PUT'].includes(method), validator: isInteger, message: 'user_id must be an integer' }
     ]
-    const receivedFields = Object.keys(post)
 
-    const missingFields = fieldDefs.filter(field => 
-        field.isRequired && !receivedFields.includes(field.key)
-    )
-    const extraFields = receivedFields.filter(field => 
-        !fieldDefs.some(f => f.key === field)
-    )
+    return validateBody(fieldDefs, 'Post')(req, res, next)
+}
 
-    if (missingFields.length > 0 || extraFields.length > 0) {
-        const details = []
-        if (missingFields.length > 0) {
-            details.push(`missing fields: ${missingFields.join(', ')}`)
-        }
-        if (extraFields.length > 0) {
-            details.push(`unexpected fields: ${extraFields.join(', ')}`)
-        }
-        logHelper.log(new Error(`Invalid post shape: ${details.join('; ')}`))
-        return res.status(400).send(`Invalid post shape: ${details.join('; ')}`)
-    }
+export function validateUserBody(req, res, next) {
+    const fieldDefs = [
+        { key: 'username', isRequired: false, validator: isString, message: 'username must be a string' },
+        { key: 'full_name', isRequired: false, validator: isString, message: 'full_name must be a string' },
+        { key: 'email', isRequired: false, validator: isEmail, message: 'email must be a valid email' }
+    ]
 
-    for (const definition of fieldDefs) {
-        if (!(definition.key in post)) continue
-
-        if (!definition.validator(post[definition.key])) {
-            logHelper.log(new Error(
-                `Validation failed for field ${definition.key}: ${definition.message}`
-            ))
-            return res.status(400).send(definition.message)
-        }
-    }
-
-    next()
+    return validateBody(fieldDefs, 'User')(req, res, next)
 }
