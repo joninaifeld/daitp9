@@ -8,3 +8,5 @@ const router = Router()
 router.get('/perfil', authMiddleware, UserController.getPerfil)
 
 router.patch('/perfil', authMiddleware, validateUserBody, UserController.updatePerfil)
+
+export default router
