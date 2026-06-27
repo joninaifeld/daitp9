@@ -1,11 +1,8 @@
 import { Router } from 'express'
-import UserService from '../services/user-service.js'
+import UserController from '../controllers/user-controller.js'
 
 const router = Router()
-const svc = new UserService()
 
-router.get('/perfil', async (req, res) => {
-})
+router.get('/perfil', UserController.getPerfil)
 
-router.put('/perfil', async (req, res) => {
-})
+router.patch('/perfil', UserController.updatePerfil)

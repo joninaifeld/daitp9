@@ -27,7 +27,8 @@ if (fs.existsSync(envPath)) {
 
 export const config = {
   SUPABASE_URL: env.NEXT_PUBLIC_SUPABASE_URL,
-  SUPABASE_SECRET: env.SECRET_KEY,
+  SUPABASE_SECRET: env.SUPABASE_SECRET_KEY,
+  JWT_SECRET: env.JWT_SECRET,
   PORT: env.PORT || 3000,
   LOG_FILE_PATH: env.LOG_FILE_PATH || './logs/app.log',
   LOG_REGION: env.LOG_REGION || 'UTC',

@@ -1,11 +1,8 @@
 import { Router } from 'express'
-import AuthService from '../services/user-service.js'
+import AuthController from '../controllers/auth-controller.js'
     
 const router = Router()
-const svc = new AuthService()
 
-router.post('/register', async (req, res) => {
-})
+router.post('/register', AuthController.register)
 
-router.post('/login', async (req, res) => {
-})
+router.post('/login', AuthController.login)
