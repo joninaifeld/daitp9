@@ -1,17 +1,16 @@
 import supabase from '../config/supabase.js'
+import { keysToSnakeCase } from '../helpers/case-helper.js'
 
 export default class PostService {
-    constructor() {
-        this.table = 'posts'
-    }
+    static table = 'posts'
 
-    async getAll() {
+    static async getAll() {
         const { data, error } = await supabase.from(this.table).select('*')
         if (error) throw error
         return data
     }
 
-    async getById(id) {
+    static async getById(id) {
         const { data, error } = await supabase
             .from(this.table)
             .select('*')
@@ -26,10 +25,11 @@ export default class PostService {
         return data
     }
 
-    async create(post) {
+    static async create(post) {
+        const snakePost = keysToSnakeCase(post)
         const { data, error } = await supabase
             .from(this.table)
-            .insert(post)
+            .insert(snakePost)
             .select()
             .single()
 
@@ -37,10 +37,11 @@ export default class PostService {
         return data
     }
 
-    async update(id, post) {
+    static async update(id, post) {
+        const snakePost = keysToSnakeCase(post)
         const { data, error } = await supabase
             .from(this.table)
-            .update(post)
+            .update(snakePost)
             .eq('id', id)
             .select()
             .single()
@@ -53,7 +54,7 @@ export default class PostService {
         return data
     }
 
-    async delete(id) {
+    static async delete(id) {
         const { data, error } = await supabase
             .from(this.table)
             .delete()

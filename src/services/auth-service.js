@@ -4,11 +4,9 @@ import HashHelper from '../helpers/hash-helper.js'
 import LogHelper from '../helpers/log-helper.js'
 
 export default class AuthService {
-    constructor() {
-        this.table = 'users'
-    }
+    static table = 'users'
 
-    async login(email, password) {
+    static async login(email, password) {
         const { data, error } = await supabase
             .from(this.table)
             .select('username, full_name, email, pfp, bio, verified, followers, following')
@@ -32,7 +30,7 @@ export default class AuthService {
         return { data, token }
     }
 
-    async register(username, fullName, email, password) {
+    static async register(username, fullName, email, password) {
         const isExisting = await this.isUserExisting(email)
         if (isExisting) {
             throw new Error('Email already exists')
@@ -56,7 +54,7 @@ export default class AuthService {
         return { data, token }
     }
 
-    async isUserExisting(email) {
+    static async isUserExisting(email) {
         const { data, error } = await supabase
             .from(this.table)
             .select('*')

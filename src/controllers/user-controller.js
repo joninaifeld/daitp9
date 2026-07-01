@@ -1,17 +1,15 @@
 import UserService from '../services/user-service.js'
 import LogHelper from '../helpers/log-helper.js'
 
-const svc = new UserService()
-
-const UserController = {
-    async getPerfil(req, res) {
+export default class UserController {
+    static async getPerfil(req, res) {
         try {
             const userId = req.user?.id || req.body?.userId || req.query?.userId
             if (!userId) {
                 return res.status(400).send('User id is required')
             }
 
-            const user = await svc.getPerfil(userId)
+            const user = await UserService.getPerfil(userId)
             if (!user) {
                 return res.status(404).send('User not found')
             }
@@ -21,9 +19,9 @@ const UserController = {
             await LogHelper.log(err)
             return res.status(500).send('Internal error')
         }
-    },
+    }
 
-    async updatePerfil(req, res) {
+    static async updatePerfil(req, res) {
         try {
             const userId = req.user?.id || req.body?.userId || req.query?.userId
             if (!userId) {
@@ -35,7 +33,7 @@ const UserController = {
                 return res.status(400).send('Invalid update payload')
             }
 
-            const updatedUser = await svc.updatePerfil(userId, updates)
+            const updatedUser = await UserService.updatePerfil(userId, updates)
             if (!updatedUser) {
                 return res.status(404).send('User not found')
             }
@@ -45,7 +43,5 @@ const UserController = {
             await LogHelper.log(err)
             return res.status(500).send('Internal error')
         }
-    },
+    }
 }
-
-export default UserController

@@ -1,12 +1,11 @@
 import supabase from '../config/supabase.js'
 import LogHelper from '../helpers/log-helper.js'
+import { keysToSnakeCase } from '../helpers/case-helper.js'
 
 export default class UserService {
-    constructor() {
-        this.table = 'users'
-    }
+    static table = 'users'
 
-    async getPerfil(userId) {
+    static async getPerfil(userId) {
         const { data, error } = await supabase
             .from(this.table)
             .select('*')
@@ -23,10 +22,11 @@ export default class UserService {
         return data
     }
 
-    async updatePerfil(userId, updates) {
+    static async updatePerfil(userId, updates) {
+        const snakeUpdates = keysToSnakeCase(updates)
         const { data, error } = await supabase
             .from(this.table)
-            .update(updates)
+            .update(snakeUpdates)
             .eq('id', userId)
             .select()
             .single()

@@ -1,23 +1,21 @@
 import PostService from '../services/post-service.js'
 import LogHelper from '../helpers/log-helper.js'
 
-const svc = new PostService()
-
-const PostController = {
-    async getAll(req, res) {
+export default class PostController {
+    static async getAll(req, res) {
         try {
-            const posts = await svc.getAll()
+            const posts = await PostService.getAll()
             return res.status(200).json(posts)
         } catch (err) {
             await LogHelper.log(err)
             return res.status(500).send('Internal error')
         }
-    },
+    }
 
-    async getById(req, res) {
+    static async getById(req, res) {
         try {
             const { id } = req.params
-            const post = await svc.getById(id)
+            const post = await PostService.getById(id)
             if (!post) {
                 return res.status(404).send('Post not found')
             }
@@ -26,30 +24,30 @@ const PostController = {
             await LogHelper.log(err)
             return res.status(500).send('Internal error')
         }
-    },
+    }
 
-    async create(req, res) {
+    static async create(req, res) {
         try {
             const data = req.body
             if (!data || Object.keys(data).length === 0) {
                 return res.status(400).send('Post data is required')
             }
-            const newPost = await svc.create(data)
+            const newPost = await PostService.create(data)
             return res.status(201).json(newPost)
         } catch (err) {
             await LogHelper.log(err)
             return res.status(500).send('Internal error')
         }
-    },
+    }
 
-    async update(req, res) {
+    static async update(req, res) {
         try {
             const { id } = req.params
             const data = req.body
             if (!data || Object.keys(data).length === 0) {
                 return res.status(400).send('Update data is required')
             }
-            const updatedPost = await svc.update(id, data)
+            const updatedPost = await PostService.update(id, data)
             if (!updatedPost) {
                 return res.status(404).send('Post not found')
             }
@@ -58,12 +56,12 @@ const PostController = {
             await LogHelper.log(err)
             return res.status(500).send('Internal error')
         }
-    },
+    }
 
-    async remove(req, res) {
+    static async remove(req, res) {
         try {
             const { id } = req.params
-            const deleted = await svc.delete(id)
+            const deleted = await PostService.delete(id)
             if (!deleted) {
                 return res.status(404).send('Post not found')
             }
@@ -72,7 +70,5 @@ const PostController = {
             await LogHelper.log(err)
             return res.status(500).send('Internal error')
         }
-    },
+    }
 }
-
-export default PostController

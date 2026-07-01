@@ -70,8 +70,8 @@ export function validatePostBody(req, res, next) {
         { key: 'date', isRequired: method => ['POST', 'PUT'].includes(method), validator: isValidTimestamptz, message: 'date must be a valid timestamptz string' },
         { key: 'likes', isRequired: false, validator: isInteger, message: 'likes must be an integer' },
         { key: 'caption', isRequired: false, validator: isString, message: 'caption must be a string' },
-        { key: 'img_url', isRequired: method => ['POST', 'PUT'].includes(method), validator: isString, message: 'img_url must be a string' },
-        { key: 'user_id', isRequired: method => ['POST', 'PUT'].includes(method), validator: isInteger, message: 'user_id must be an integer' }
+        { key: 'imgUrl', isRequired: method => ['POST', 'PUT'].includes(method), validator: isString, message: 'imgUrl must be a string' },
+        { key: 'userId', isRequired: method => ['POST', 'PUT'].includes(method), validator: isInteger, message: 'userId must be an integer' }
     ]
 
     return validateBody(fieldDefs, 'Post')(req, res, next)
@@ -80,7 +80,7 @@ export function validatePostBody(req, res, next) {
 export function validateUserBody(req, res, next) {
     const fieldDefs = [
         { key: 'username', isRequired: false, validator: isString, message: 'username must be a string' },
-        { key: 'full_name', isRequired: false, validator: isString, message: 'full_name must be a string' },
+        { key: 'fullName', isRequired: false, validator: isString, message: 'fullName must be a string' },
         { key: 'email', isRequired: false, validator: isEmail, message: 'email must be a valid email' }
     ]
 
