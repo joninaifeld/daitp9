@@ -16,5 +16,5 @@ app.use('/api/post', PostRouter)
 app.use('/api/auth', AuthRouter)
 
 app.listen(port, () => {
-	console.log(`Server listening on port ${port}`)
+	console.log(`Server listening on http://localhost:${port}`)
 })
