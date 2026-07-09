@@ -15,9 +15,6 @@
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
-    "fs": "^0.0.1-security",
-    "jsonwebtoken": "^9.0.3",
-    "path": "^0.12.7",
-    "url": "^0.11.4"
+    "jsonwebtoken": "^9.0.3"
   }
 }
