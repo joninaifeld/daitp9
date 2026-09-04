@@ -11,7 +11,7 @@ const router = Router()
 	#swagger.responses[200] = { description: 'Lista de posts devuelta correctamente.', schema: [{ $ref: '#/definitions/Post' }] }
 	#swagger.responses[500] = { description: 'Error interno del servidor.' }
 */
-router.get('/', PostController.getAll)
+router.get('/', /* #swagger.tags = ['Post'] */ PostController.getAll)
 
 /* #swagger.tags = ['Post']
 	#swagger.summary = 'Obtener post por id'
@@ -21,7 +21,7 @@ router.get('/', PostController.getAll)
 	#swagger.responses[404] = { description: 'Post no encontrado.' }
 	#swagger.responses[500] = { description: 'Error interno del servidor.' }
 */
-router.get('/:id', PostController.getById)
+router.get('/:id', /* #swagger.tags = ['Post'] */ PostController.getById)
 
 /* #swagger.tags = ['Post']
 	#swagger.summary = 'Crear post'
@@ -32,7 +32,7 @@ router.get('/:id', PostController.getById)
 	#swagger.responses[400] = { description: 'Datos faltantes o inválidos.' }
 	#swagger.responses[500] = { description: 'Error interno del servidor.' }
 */
-router.post('/', authMiddleware, validatePostBody, PostController.create)
+router.post('/', /* #swagger.tags = ['Post'] */ authMiddleware, validatePostBody, PostController.create)
 
 /* #swagger.tags = ['Post']
 	#swagger.summary = 'Actualizar post'
@@ -45,7 +45,7 @@ router.post('/', authMiddleware, validatePostBody, PostController.create)
 	#swagger.responses[404] = { description: 'Post no encontrado.' }
 	#swagger.responses[500] = { description: 'Error interno del servidor.' }
 */
-router.patch('/:id', authMiddleware, validatePostBody, PostController.update)
+router.patch('/:id', /* #swagger.tags = ['Post'] */ authMiddleware, validatePostBody, PostController.update)
 
 /* #swagger.tags = ['Post']
 	#swagger.summary = 'Eliminar post'
@@ -56,6 +56,6 @@ router.patch('/:id', authMiddleware, validatePostBody, PostController.update)
 	#swagger.responses[404] = { description: 'Post no encontrado.' }
 	#swagger.responses[500] = { description: 'Error interno del servidor.' }
 */
-router.delete('/:id', authMiddleware, PostController.remove)
+router.delete('/:id', /* #swagger.tags = ['Post'] */ authMiddleware, PostController.remove)
 
 export default router

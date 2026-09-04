@@ -9,6 +9,20 @@ const doc = {
 	schemes: ['http'],
 	consumes: ['application/json'],
 	produces: ['application/json'],
+	tags: [
+		{
+			name: 'Auth',
+			description: 'Endpoints de autenticación y registro de usuarios.',
+		},
+		{
+			name: 'User',
+			description: 'Endpoints relacionados con el perfil de usuario.',
+		},
+		{
+			name: 'Post',
+			description: 'Endpoints para administrar publicaciones.',
+		},
+	],
 	securityDefinitions: {
 		bearerAuth: {
 			type: 'apiKey',
@@ -73,7 +87,7 @@ const doc = {
 	},
 }
 
-const outputFile = './docs/swagger-output.json'
+const outputFile = './swagger/swagger-output.json'
 const endpointsFiles = [
 	'./index.js',
 	'./src/routes/auth-route.js',

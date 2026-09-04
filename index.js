@@ -13,7 +13,7 @@ const app = express()
 const port = config.PORT
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
-const swaggerPath = path.join(__dirname, 'docs', 'swagger-output.json')
+const swaggerPath = path.join(__dirname, 'swagger', 'swagger-output.json')
 const swaggerDocument = fs.existsSync(swaggerPath)
 	? JSON.parse(fs.readFileSync(swaggerPath, 'utf-8'))
 	: {}

@@ -11,7 +11,7 @@ const router = Router()
 	#swagger.responses[409] = { description: 'El email ya existe.' }
 	#swagger.responses[500] = { description: 'Error interno del servidor.' }
 */
-router.post('/register', AuthController.register)
+router.post('/register', /* #swagger.tags = ['Auth'] */ AuthController.register)
 
 /* #swagger.tags = ['Auth']
 	#swagger.summary = 'Iniciar sesión'
@@ -21,6 +21,6 @@ router.post('/register', AuthController.register)
 	#swagger.responses[401] = { description: 'Credenciales inválidas.' }
 	#swagger.responses[500] = { description: 'Error interno del servidor.' }
 */
-router.post('/login', AuthController.login)
+router.post('/login', /* #swagger.tags = ['Auth'] */ AuthController.login)
 
 export default router

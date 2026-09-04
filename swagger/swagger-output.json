@@ -7,6 +7,20 @@
   },
   "host": "localhost:3000",
   "basePath": "/",
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Endpoints de autenticación y registro de usuarios."
+    },
+    {
+      "name": "User",
+      "description": "Endpoints relacionados con el perfil de usuario."
+    },
+    {
+      "name": "Post",
+      "description": "Endpoints para administrar publicaciones."
+    }
+  ],
   "schemes": [
     "http"
   ],
@@ -27,6 +41,9 @@
   "paths": {
     "/api/user/perfil": {
       "get": {
+        "tags": [
+          "User"
+        ],
         "description": "",
         "parameters": [
           {
@@ -54,6 +71,9 @@
         }
       },
       "patch": {
+        "tags": [
+          "User"
+        ],
         "description": "",
         "parameters": [
           {
@@ -83,6 +103,9 @@
     },
     "/api/post/": {
       "get": {
+        "tags": [
+          "Post"
+        ],
         "description": "",
         "responses": {
           "200": {
@@ -94,6 +117,9 @@
         }
       },
       "post": {
+        "tags": [
+          "Post"
+        ],
         "description": "",
         "parameters": [
           {
@@ -120,6 +146,9 @@
     },
     "/api/post/{id}": {
       "get": {
+        "tags": [
+          "Post"
+        ],
         "description": "",
         "parameters": [
           {
@@ -142,6 +171,9 @@
         }
       },
       "patch": {
+        "tags": [
+          "Post"
+        ],
         "description": "",
         "parameters": [
           {
@@ -175,6 +207,9 @@
         }
       },
       "delete": {
+        "tags": [
+          "Post"
+        ],
         "description": "",
         "parameters": [
           {
@@ -207,6 +242,9 @@
     },
     "/api/auth/register": {
       "post": {
+        "tags": [
+          "Auth"
+        ],
         "description": "",
         "parameters": [
           {
@@ -246,6 +284,9 @@
     },
     "/api/auth/login": {
       "post": {
+        "tags": [
+          "Auth"
+        ],
         "description": "",
         "parameters": [
           {
@@ -279,6 +320,9 @@
     },
     "/register": {
       "post": {
+        "tags": [
+          "Auth"
+        ],
         "description": "",
         "parameters": [
           {
@@ -318,6 +362,9 @@
     },
     "/login": {
       "post": {
+        "tags": [
+          "Auth"
+        ],
         "description": "",
         "parameters": [
           {
@@ -351,6 +398,9 @@
     },
     "/perfil": {
       "get": {
+        "tags": [
+          "User"
+        ],
         "description": "",
         "parameters": [
           {
@@ -378,6 +428,9 @@
         }
       },
       "patch": {
+        "tags": [
+          "User"
+        ],
         "description": "",
         "parameters": [
           {
@@ -407,6 +460,9 @@
     },
     "/": {
       "get": {
+        "tags": [
+          "Post"
+        ],
         "description": "",
         "responses": {
           "200": {
@@ -418,6 +474,9 @@
         }
       },
       "post": {
+        "tags": [
+          "Post"
+        ],
         "description": "",
         "parameters": [
           {
@@ -444,6 +503,9 @@
     },
     "/{id}": {
       "get": {
+        "tags": [
+          "Post"
+        ],
         "description": "",
         "parameters": [
           {
@@ -466,6 +528,9 @@
         }
       },
       "patch": {
+        "tags": [
+          "Post"
+        ],
         "description": "",
         "parameters": [
           {
@@ -499,6 +564,9 @@
         }
       },
       "delete": {
+        "tags": [
+          "Post"
+        ],
         "description": "",
         "parameters": [
           {

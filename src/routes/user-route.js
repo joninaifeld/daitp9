@@ -14,7 +14,7 @@ const router = Router()
 	#swagger.responses[404] = { description: 'Usuario no encontrado.' }
 	#swagger.responses[500] = { description: 'Error interno del servidor.' }
 */
-router.get('/perfil', authMiddleware, UserController.getPerfil)
+router.get('/perfil', /* #swagger.tags = ['User'] */ authMiddleware, UserController.getPerfil)
 
 /* #swagger.tags = ['User']
 	#swagger.summary = 'Actualizar perfil'
@@ -26,6 +26,6 @@ router.get('/perfil', authMiddleware, UserController.getPerfil)
 	#swagger.responses[404] = { description: 'Usuario no encontrado.' }
 	#swagger.responses[500] = { description: 'Error interno del servidor.' }
 */
-router.patch('/perfil', authMiddleware, validateUserBody, UserController.updatePerfil)
+router.patch('/perfil', /* #swagger.tags = ['User'] */ authMiddleware, validateUserBody, UserController.updatePerfil)
 
 export default router
